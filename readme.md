@@ -2,7 +2,7 @@
 
 Dies ist das Repository zum Workshop "Der Blume geht ein Licht auf", der von der Abteilung Didaktik der Informatik an der Universität Oldenburg entwickelt wurde.
 
-| Datei       | Inhaltsbeschreibung |
+| Datei    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   | Inhaltsbeschreibung |
 | ------------: |---------------|
 | [Material 01](/Material_01_Framework.pdf) | Hier findet sich ein Überblick über die Materialien und mögliche Abläufe des vorgestellten Workshops |
 | [Material 02](/Material_02_Handreichung_BlumeErstellen.pdf) |   |
