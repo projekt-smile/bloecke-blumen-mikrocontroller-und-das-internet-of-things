@@ -20,7 +20,7 @@ RestClient client = RestClient("api.openweathermap.org");                       
 #define OLED_RESET 0                       // "0" fuer ESP8266
 Adafruit_SSD1306 display(OLED_RESET);
 
-#define LED_DATA_PIN D3                    // an welchem Pin liegt die LED an?
+#define LED_DATA_PIN D4                    // an welchem Pin liegt die LED an?
 
 CRGB leds[1];                              // Instanziieren der LED
 
