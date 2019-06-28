@@ -1,4 +1,4 @@
-/* smile Internet-Wetter-Lampe v1.0.3 - letzte Aenderung am 22. Januar 2019 - entwickelt an der Abteilung "Didaktik der Informatik" an der Universitaet in Oldenburg */
+/* smile Internet-Wetter-Lampe v1.0.4 - letzte Aenderung am 28. Juni 2019 - entwickelt an der Abteilung "Didaktik der Informatik" an der Universitaet in Oldenburg */
 
 #include "FastLED.h"                      // Bibliothek einbinden, um LED ansteuern zu koennen
 
