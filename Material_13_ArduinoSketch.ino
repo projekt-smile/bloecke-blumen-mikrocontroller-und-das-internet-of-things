@@ -1,4 +1,4 @@
-/* smile Internet-Wetter-Lampe v1.0.4 - letzte Aenderung am 28. Juni 2019 - entwickelt an der Abteilung "Didaktik der Informatik" an der Universitaet in Oldenburg */
+/* smile Internet-Wetter-Lampe v1.0.5 - letzte Aenderung am 23. August 2019 - entwickelt an der Abteilung "Didaktik der Informatik" an der Universitaet in Oldenburg */
 
 #include "FastLED.h"                      // Bibliothek einbinden, um LED ansteuern zu koennen
 
@@ -27,7 +27,7 @@ CRGB leds[1];                              // Instanziieren der LED
 
 
 
-// ========================  hier eure Werte eintragen  ===================================================================================================================
+// ========================  hier deinen API-Key eintragen!!!  ============================================================================================================
 
 const String api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";    // dein Open-Weather-Map-API-Schluessel, kostenlos beziehbar ueber https://openweathermap.org/
 
@@ -40,6 +40,7 @@ int weatherID_shortened = weatherID / 100;
 String weatherforecast_shortened = " ";
 float temperature_Kelvin = 0.0;
 float temperature_Celsius = temperature_Kelvin - 273;      // Hinweis: Celsiuswert + 273 = Kelvinwert
+int temperature_Celsius_Int;
 unsigned long systemtime = 0;                              // Zeit, die seit dem Start des Mikrocontrollers vergangen ist
 unsigned long lastcheck = 0;                               // Zeitpunkt des letzten Checks
 
@@ -67,7 +68,7 @@ void setup() {
   leds[0] = CRGB::Red;                              // LED zu Beginn rot setzen, um sie zu testen
   FastLED.setBrightness(255);
   FastLED.show();
-  wifiManager.autoConnect("deineSmarteLampe");
+  wifiManager.autoConnect("deineSmarteLampe");      // hier kann der Name des Hotspots deiner Lampe angepasst werden
 
   getCurrentWeatherConditions();                    // nach dem (Neu-)Start erstmalig das aktuelle Wetter laden
   updateDisplay();
@@ -124,10 +125,14 @@ void updateDisplay() {                                                          
 
   // untere Zeile
   if (weatherforecast_shortened.length() != 0) {                          // nur, wenn weatherforecast_shortened nicht leer ist (dann naemlich keine Server-Antwort)
-    int digitsTemperature = String(round(temperature_Celsius)).length();  // wie lang (wie viele Ziffern) ist die Anzeige der Temperatur?
+
+    Serial.println(temperature_Celsius_Int);
+    Serial.println(String(temperature_Celsius_Int,DEC));
+    int digitsTemperature = String(temperature_Celsius_Int,DEC).length();  // wie lang (wie viele Ziffern) ist die Anzeige der Temperatur?
     display.setCursor(77 - 12 * digitsTemperature, 18);                   // bei textsize(2) ist eine Ziffer 12 Pixel breit; rechtsbuendig anzeigen, deswegen wird die x-Koord. des Cursors abhaengig davon gesetzt
     display.setTextSize(2);
-    display.println(String(round(temperature_Celsius)));
+    display.println(temperature_Celsius_Int);
+    
 
     // Grad Celsius: C
     display.setCursor(86, 18);
@@ -152,7 +157,8 @@ void updateDisplay() {                                                          
 
 
 void getCurrentWeatherConditions() {                                                      // Funktion zum Abrufen der Wetterdaten von der Openweathermap-API
-  String address = "/data/2.5/weather?q=Oldenburg,DE&APPID=" + api_key;
+  
+  String address = "/data/2.5/weather?q=Bremen,DE&APPID=" + api_key;
   char address2[100];
   address.toCharArray(address2, 100);
   Serial.println(address2);
@@ -173,10 +179,14 @@ void getCurrentWeatherConditions() {                                            
 
   weatherID = weather["id"];
   temperature_Kelvin = weatherdaten["temp"];
+  Serial.println(temperature_Kelvin);
   weatherforecast_shortened = "";
-  temperature_Celsius = temperature_Kelvin - 273;                                  // Hinweis: Celsiuswert + 273 = Kelvinwert
+  temperature_Celsius = temperature_Kelvin - 273;                                // Hinweis: Celsiuswert + 273 = Kelvinwert
+
+  temperature_Celsius_Int = (int)temperature_Celsius;
+  
   weatherID_shortened = weatherID / 100;
-  switch (weatherID_shortened) {                                                   // Werte hierfuer entstammen aus https://openweathermap.org/weather-conditions
+  switch (weatherID_shortened) {                                                 // Werte hierfuer stammen aus https://openweathermap.org/weather-conditions
     case 2: weatherforecast_shortened = "Gewitter"; break;
     case 3: weatherforecast_shortened = "Nieselreg."; break;
     case 5: weatherforecast_shortened = "Regen"; break;
@@ -186,6 +196,27 @@ void getCurrentWeatherConditions() {                                            
     default: weatherforecast_shortened = ""; break;                              // wenn kein anderer Wert passt (z.B. weil Server nicht antwortet), ist die weatherlage ungewiss
   } if (weatherID == 800) weatherforecast_shortened = "klar";                    // nur fuer den Fall, dass die weather-ID genau 800 ist, ist es "klar"
 }
+
+
+// ========================================================================================================================================================================
+// folgende Methode erleichtert das Modellieren von Farbverlaeufen von einem RGB-Wert
+
+void fade(int led_position, uint16_t duration, uint16_t delay_val, uint16_t startR, uint16_t startG, uint16_t startB, uint16_t endR, uint16_t endG, uint16_t endB) {
+    int16_t redDiff = endR - startR;
+    int16_t greenDiff = endG - startG;
+    int16_t blueDiff = endB - startB;
+    int16_t steps = duration*1000 / delay_val;
+    int16_t redValue, greenValue, blueValue;
+    for (int16_t i = 0 ; i < steps - 1 ; ++i) {
+        redValue = (int16_t)startR + (redDiff * i / steps);
+        greenValue = (int16_t)startG + (greenDiff * i / steps);
+        blueValue = (int16_t)startB + (blueDiff * i / steps);
+        leds[0]=CRGB(redValue, greenValue, blueValue);
+        FastLED.show();
+        delay(delay_val);
+    }
+    leds[led_position]=CRGB(endR, endG, endB);
+ }
 
 
 // ========================================================================================================================================================================
@@ -225,4 +256,3 @@ void LED_effect_fog() {
 void LED_effect_cloudy() {
 
 }
-
