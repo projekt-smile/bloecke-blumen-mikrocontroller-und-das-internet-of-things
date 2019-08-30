@@ -5,7 +5,8 @@
 \__ \ | | | | | | |  __/
 |___/_| |_| |_|_|_|\___|
 
-Internet-Wetter-Lampe v1.0.5 - letzte Aenderung am 23. August 2019 - entwickelt an der Abteilung "Didaktik der Informatik" an der Universitaet in Oldenburg
+Internet-Wetter-Lampe v1.0.6 - letzte Aenderung am 30. August 2019 - entwickelt an der Abteilung "Didaktik der Informatik" an der Universitaet in Oldenburg
+
 */
 
 
@@ -27,7 +28,9 @@ WiFiManager wifiManager;
 RestClient client = RestClient("api.openweathermap.org");                         // RestClient der Openweathermap-API (Hinweis: Port mit Komma uebergeben)
 
 #define OLED_RESET 0                       // "0" fuer ESP8266
-Adafruit_SSD1306 display(OLED_RESET);
+#define SCREEN_WIDTH 128                   // OLED display width, in pixels
+#define SCREEN_HEIGHT 64                   // OLED display height, in pixels
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 #define LED_DATA_PIN D4                    // an welchem Pin liegt die LED an?
 
@@ -63,12 +66,14 @@ void setup() {
   display.setTextColor(WHITE);                      // ... und "Verbindungsversuch" anzeigen
   display.setTextSize(1);
   display.startscrollleft(0x00, 0x0F);
-  display.setCursor(0, 9);
+  display.setCursor(0, 16);                         // Aufgrund der kleineren Displaygröße hier ein Offset von 16Pixeln        
   display.println("Verbinde dich mit");
-  display.setCursor(0, 17);
-  display.println("deineSmarteLampe und");
-  display.setCursor(0, 25);
-  display.println("\224ffne 192.168.4.1");
+  display.setCursor(0, 28);                        // 7 Pixel Buchstabenhöhe + 5 Pixel Abstand
+  display.println("deineSmarteLampe");
+  display.setCursor(0, 40);
+  display.println("und \224ffne");
+  display.setCursor(0, 52);
+  display.println("192.168.4.1");
   display.display();                                // ... und die Änderungen anzeigen
 
   FastLED.addLeds<NEOPIXEL, LED_DATA_PIN>(leds, 1); // LED instanziieren
@@ -126,7 +131,7 @@ void updateDisplay() {                                                          
   // obere Zeile
   display.setTextColor(WHITE);
   display.setTextSize(1);
-  display.setCursor(32, 9);                 // bei TextSize(1) funktioniert setCursor(32, 9) ganz gut
+  display.setCursor(32, 16);                 // bei TextSize(1) funktioniert setCursor(32, 9) ganz gut
   display.println(weatherforecast_shortened);
 
   Serial.println(weatherforecast_shortened);
@@ -138,27 +143,27 @@ void updateDisplay() {                                                          
     Serial.println(temperature_Celsius_Int);
     Serial.println(String(temperature_Celsius_Int,DEC));
     int digitsTemperature = String(temperature_Celsius_Int,DEC).length();  // wie lang (wie viele Ziffern) ist die Anzeige der Temperatur?
-    display.setCursor(77 - 12 * digitsTemperature, 18);                   // bei textsize(2) ist eine Ziffer 12 Pixel breit; rechtsbuendig anzeigen, deswegen wird die x-Koord. des Cursors abhaengig davon gesetzt
+    display.setCursor(77 - 12 * digitsTemperature, 50);                   // bei textsize(2) ist eine Ziffer 12 Pixel breit; rechtsbuendig anzeigen, deswegen wird die x-Koord. des Cursors abhaengig davon gesetzt
     display.setTextSize(2);
     display.println(temperature_Celsius_Int);
     
 
     // Grad Celsius: C
-    display.setCursor(86, 18);
+    display.setCursor(86, 50);
     display.setTextSize(2);
     display.println("C");
 
     // Grad Celsius: Kreis
-    display.drawCircle(80, 20, 2, WHITE);
+    display.drawCircle(80, 52, 2, WHITE);
   } else {
     display.stopscroll();
     display.setTextColor(WHITE);
     display.setTextSize(1);
-    display.setCursor(32, 9);
+    display.setCursor(32, 16);
     display.println("keine");
-    display.setCursor(32, 17);
+    display.setCursor(32, 28);
     display.println("Server-");
-    display.setCursor(32, 25);
+    display.setCursor(32, 40);
     display.println("antwort...");
   }
   display.display();
@@ -167,7 +172,7 @@ void updateDisplay() {                                                          
 
 void getCurrentWeatherConditions() {                                                      // Funktion zum Abrufen der Wetterdaten von der Openweathermap-API
   
-  String address = "/data/2.5/weather?q=Bremen,DE&APPID=" + api_key;
+  String address = "/data/2.5/weather?q=Oldenburg,DE&APPID=" + api_key;
   char address2[100];
   address.toCharArray(address2, 100);
   Serial.println(address2);
@@ -229,7 +234,6 @@ void fade(int led_position, uint16_t duration, uint16_t delay_val, uint16_t star
 
 
 /*
-
                             
 ###### #    # #####  ###### 
 #      #    # #    # #      
@@ -255,6 +259,7 @@ void fade(int led_position, uint16_t duration, uint16_t delay_val, uint16_t star
 ###### # #    # #       ####  ######  ####  ###### #    # 
 
 
+
           ########
           ########
           ########
@@ -270,8 +275,6 @@ void fade(int led_position, uint16_t duration, uint16_t delay_val, uint16_t star
          ##########
            ######
              ## 
-
-
 */
 
 void LED_effect_clearSky() { // Effekt, der angezeigt wird, wenn der Himmel klar ist
