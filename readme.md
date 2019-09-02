@@ -6,7 +6,7 @@ Dies ist das Repository zum Workshop "Der Blume geht ein Licht auf", der von der
 | Datei | Inhaltsbeschreibung |
 | ------------: | :-------------- |
 |<img width=250/> | <img width=500/> |
-| [Material 01](/Material_01_Framework.pdf) | Hier findet sich ein Überblick den vorgestellten Workshop, mögliche Verlaufspläne und weitere Hintergrundinformationen |
+| [Material 01](/Material_01_Workshopbeschreibung.pdf) | Hier findet sich ein Überblick den vorgestellten Workshop, mögliche Verlaufspläne und weitere Hintergrundinformationen |
 | [Material 02](/Material_02_Handreichung_BlumeErstellen.pdf) | Informationen zum Aufbau der Lampen (für LehrerInnen) |
 | [Material 03](/Material_03_Handreichung_Mikrocontroller.pdf) | Handreichung zur Einrichtung der Arduino IDE und zur Installation der benötigten Libraries (für SchülerInnen und LehrerInnen) |
 | [Material 04](/Material_04_Arbeitsblatt1.pdf) | Arbeitsblatt 1: Parametrisches Design mit BlocksCAD (für SchülerInnen) |
