@@ -1,8 +1,8 @@
-# Blöcke, Blumen, Mikrocontroller und das Internet-of-Things
-
 ![alt text](https://www.smile-smart-it.de/wp-content/uploads/2018/05/blume_DDI_kreis-e1539947053430.png "Bild")
 
-Dies ist das Repository zum Workshop "Der Blume geht ein Licht auf", der von der Abteilung Didaktik der Informatik an der Universität Oldenburg entwickelt wurde.
+# Blöcke, Blumen, Mikrocontroller und das Internet-of-Things
+
+Dies ist das Repository zum Workshop ["Der Blume geht ein Licht auf"](https://www.smile-smart-it.de/index.php/2018/05/04/der-blume-geht-ein-licht-auf/), der von der Abteilung Didaktik der Informatik an der Universität Oldenburg entwickelt wurde.
 
 
 | Datei | Inhaltsbeschreibung |
