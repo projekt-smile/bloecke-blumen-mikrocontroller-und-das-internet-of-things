@@ -8,11 +8,11 @@ Dies ist das Repository zum Workshop ["Der Blume geht ein Licht auf"](https://ww
 | ------------: | :-------------- |
 |<img width=250/> | <img width=500/> |
 | [Material 01](/Material_01_Workshopbeschreibung.pdf) | Hier findet sich ein Überblick den vorgestellten Workshop, mögliche Verlaufspläne und weitere Hintergrundinformationen |
-| [Material 02](/Material_02_Handreichung_BlumeErstellen.pdf) | Informationen zum Aufbau der Lampen (für LehrerInnen) |
+| [Material 02](/Material_02_Handreichung_3D-Druck.pdf) | Informationen zum Aufbau der Lampen (für LehrerInnen) |
 | [Material 03](/Material_03_Handreichung_Mikrocontroller.pdf) | Handreichung zur Einrichtung der Arduino IDE und zur Installation der benötigten Libraries (für SchülerInnen und LehrerInnen) |
 | [Material 04](/Material_04_Arbeitsblatt1.pdf) | Arbeitsblatt 1: Parametrisches Design mit BlocksCAD (für SchülerInnen) |
 | [Material 05](/Material_05_Hilfekarten.pdf) |  Hilfekarten zu Arbeitsblatt 1 (für LehrerInnen bzw. SchülerInnen) |
-| [Material 06](/Material_06_Kurzanleitung.pdf) |  Kurzanleitung zum Löten der LED, zum Zusammenstecken der Mikrocontroller-Komponenten und zum Einrichtung des WLAN-Zugangs (für SchülerInnen) |
+| [Material 06](/Material_06_Kurzanleitung.pdf) |  Kurzanleitung zum Löten der LED, zum Zusammenstecken der Mikrocontroller-Komponenten und zur Einrichtung des WLAN-Zugangs (für SchülerInnen) |
 | [Material 07](/Material_07_Arbeitsblatt2.pdf) | Arbeitsblatt 2: Einführung in die Codierung von Farben |
 | [Material 08](/Material_08_Beispielblume.stl) | Druckfähige Beispiel-Blume |
 | [Material 09](/Material_09_Beispielblume_BlocksCAD_Code.xml) | BlocksCAD-Code der Beispiel-Blume |
