@@ -3,7 +3,7 @@
 
 Dies ist das Repository zum Workshop ["Der Blume geht ein Licht auf"](https://www.smile-smart-it.de/index.php/2018/05/04/der-blume-geht-ein-licht-auf/), der von der Abteilung Didaktik der Informatik an der Universität Oldenburg entwickelt wurde.
 
-Das diesem Kursangebot zugrunde liegende Konzept wird in dem unter dem Titel ["Blöcke, Blumen, Mikrocontroller und das Internet of Things"](https://www.researchgate.net/publication/336642438_Blocke_Blumen_Mikrocontroller_und_das_Internet_of_Things_Ein_Konzept_zum_kontextorientierten_Einsatz_von_Parametric_Design_und_Physical_Computing_in_Madchen-Forderworkshops) veröffentlichten Konferenzbeitrag ausführlich dargelegt.
+Das diesem Kursangebot zugrunde liegende Konzept wird über die Beschreibung in diesem Repository hinaus in dem unter dem Titel ["Blöcke, Blumen, Mikrocontroller und das Internet of Things"](https://www.researchgate.net/publication/336642438_Blocke_Blumen_Mikrocontroller_und_das_Internet_of_Things_Ein_Konzept_zum_kontextorientierten_Einsatz_von_Parametric_Design_und_Physical_Computing_in_Madchen-Forderworkshops) veröffentlichten Konferenzbeitrag ausführlich aus fachdidaktischer Perspektive dargelegt.
 
 
 | Datei | Inhaltsbeschreibung |
