@@ -1,0 +1,471 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="arduino_functions" id="QpT,uHn6/I8BZ6S#^9r=" x="50" y="50">
+    <statement name="SETUP_FUNC">
+      <block type="smile_display_init" id=".bBuR}[e`fiAF?DDRRbi">
+        <next>
+          <block type="smile_led_init" id="b0UknYKg8]ZV,sqw9ar]">
+            <field name="pin_led_init">D4</field>
+            <value name="num_led_init">
+              <block type="math_number" id="mc=A+uOW+w;6?#|J).e(">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <next>
+              <block type="smile_display_write" id="|n%[yH@p61i)MzlS|zlS">
+                <value name="displayText">
+                  <block type="text" id="FkXq#pjMjm!~)86SANbz">
+                    <field name="TEXT">Verbinde dich mit dem WLAN deiner Blume</field>
+                  </block>
+                </value>
+                <value name="textSize">
+                  <block type="math_number" id="zvdw7#pyf[H9xCdh*y1e">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+                <value name="xPosition">
+                  <block type="math_number" id="H:05-t+Mr?PNUx=l5d5+">
+                    <field name="NUM">32</field>
+                  </block>
+                </value>
+                <value name="yPosition">
+                  <block type="math_number" id="l3NVJE.xYS-T*0*frQZs">
+                    <field name="NUM">16</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="smile_wifi" id="D8X9+/y!]z5G|OuI]+u?">
+                    <value name="NETWORKNAME">
+                      <block type="text" id="K-}08jyog)fW7!m+2u%5">
+                        <field name="TEXT">MeineSmarteLampe</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="t*M3+bBqsBL/I,eJW+pa">
+                        <field name="VAR">WeatherID</field>
+                        <value name="VALUE">
+                          <block type="variables_set_type" id="0#3!Q|Q5fHL:#C8ikfh3">
+                            <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+                            <value name="VARIABLE_SETTYPE_INPUT">
+                              <block type="smile_openweathermap" id="bGJl+ZEB+Y!cQ{pM;A,v">
+                                <field name="smile_openweathermap">weatherID</field>
+                                <value name="location">
+                                  <shadow type="text" id="sy-v[GVHZ!cL%m+FID*q">
+                                    <field name="TEXT">Oldenburg</field>
+                                  </shadow>
+                                </value>
+                                <value name="apikey">
+                                  <shadow type="text" id="1XbiRiB;])pHTU[(PLIa">
+                                    <field name="TEXT">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</field>
+                                  </shadow>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="time_delay" id="w#(~Fu`f9+PCWBf)!(Cu">
+                            <value name="DELAY_TIME_MILI">
+                              <block type="math_number" id="N(zoY0_EI(Y66W1n1*`y">
+                                <field name="NUM">1000</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="variables_set" id="6d!f*Mznd}K(g0L`(xCz">
+                                <field name="VAR">WeatherTemp</field>
+                                <value name="VALUE">
+                                  <block type="variables_set_type" id="%#Vt|K1`()EUh5TFj-zM">
+                                    <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+                                    <value name="VARIABLE_SETTYPE_INPUT">
+                                      <block type="smile_openweathermap" id="fZ9TwE~-b}8P#Sp1@juu">
+                                        <field name="smile_openweathermap">weatherTemp</field>
+                                        <value name="location">
+                                          <shadow type="text" id="g5f%Af{LLFZjDpOc!:]?">
+                                            <field name="TEXT">Oldenburg</field>
+                                          </shadow>
+                                        </value>
+                                        <value name="apikey">
+                                          <shadow type="text" id="Ph~+*`Tsvf:8(tK:8L9R">
+                                            <field name="TEXT">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</field>
+                                          </shadow>
+                                        </value>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="variables_set" id="5E[~IXtILZ99(/jt5Q8k">
+                                    <field name="VAR">Lastcheck</field>
+                                    <value name="VALUE">
+                                      <block type="math_number" id="cQH}a2%7J/F3Q0}n{^xB">
+                                        <field name="NUM">0</field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="smile_display_clear" id="nl-z^+]|A;Y[yY2=%Y7_"></block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <statement name="LOOP_FUNC">
+      <block type="smile_display_write" id="iANj-BNvFV3PI1/2z9;E">
+        <value name="displayText">
+          <block type="variables_get" id="bqcOU;HP_%qS1NJNLJ,w">
+            <field name="VAR">Wetterbeschreibung</field>
+          </block>
+        </value>
+        <value name="textSize">
+          <block type="math_number" id="H*z)Db+m%o?9|QDe,?@Q">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <value name="xPosition">
+          <block type="math_number" id="8I(2cR55eR}Nz){)j2uP">
+            <field name="NUM">32</field>
+          </block>
+        </value>
+        <value name="yPosition">
+          <block type="math_number" id="UC/jxbw{H{/iqH5R[i(w">
+            <field name="NUM">16</field>
+          </block>
+        </value>
+        <next>
+          <block type="smile_display_write" id="0^8S9#lRy@Y+8{PSuW/g">
+            <value name="displayText">
+              <block type="variables_get" id="__@IU~x~o])D[L2m!5,2">
+                <field name="VAR">WeatherTemp</field>
+              </block>
+            </value>
+            <value name="textSize">
+              <block type="math_number" id="Fyh5Q=%B|XH.pX]a?s2b">
+                <field name="NUM">4</field>
+              </block>
+            </value>
+            <value name="xPosition">
+              <block type="math_number" id="B4p^oG=e.ft@l+N+?/S.">
+                <field name="NUM">32</field>
+              </block>
+            </value>
+            <value name="yPosition">
+              <block type="math_number" id=")mRQUCC`;{ALBj/Yur*U">
+                <field name="NUM">32</field>
+              </block>
+            </value>
+            <next>
+              <block type="controls_if" id="fHuIjK~.6cUdrmM8bxUg">
+                <value name="IF0">
+                  <block type="logic_compare" id="ELcrDE4`K{sedj:C@Gc`">
+                    <field name="OP">GTE</field>
+                    <value name="A">
+                      <block type="math_arithmetic" id=")6@rk+z%ymqLvFHkL@mC">
+                        <field name="OP">MINUS</field>
+                        <value name="A">
+                          <block type="time_millis" id="71(=eI{U`1A0pB;@j|6B"></block>
+                        </value>
+                        <value name="B">
+                          <block type="variables_get" id="nSN_kR(|VRezUIJE)q85">
+                            <field name="VAR">Lastcheck</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="p=-BKs0q]nv{8_?v(6:W">
+                        <field name="NUM">30000</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="variables_set" id="|8!tzi-QHWN}6(`Z;ekr">
+                    <field name="VAR">WeatherID</field>
+                    <value name="VALUE">
+                      <block type="variables_set_type" id="7O-g/:A6CA%6N@a5rL5!">
+                        <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+                        <value name="VARIABLE_SETTYPE_INPUT">
+                          <block type="smile_openweathermap" id=",[Ox!V{8A!.zVr)j#[7_">
+                            <field name="smile_openweathermap">weatherID</field>
+                            <value name="location">
+                              <shadow type="text" id="%~yd;:vQ0[i6t:hCqP~1">
+                                <field name="TEXT">Oldenburg</field>
+                              </shadow>
+                            </value>
+                            <value name="apikey">
+                              <shadow type="text" id="r7Qs[TDlqj4)Ut=Kms0?">
+                                <field name="TEXT">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</field>
+                              </shadow>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="time_delay" id="Sn`ZU?,LTtb~uaXsB7GM">
+                        <value name="DELAY_TIME_MILI">
+                          <block type="math_number" id="x,YYe)`=DT@L8Q@(DsB/">
+                            <field name="NUM">1000</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set" id="tePF):;*=[.RvF#*Qx10">
+                            <field name="VAR">WeatherTemp</field>
+                            <value name="VALUE">
+                              <block type="variables_set_type" id="LyrRvFEpc-GUQ2UgSeM,">
+                                <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+                                <value name="VARIABLE_SETTYPE_INPUT">
+                                  <block type="smile_openweathermap" id="FGY.|cLx^%`-exh^l|l9">
+                                    <field name="smile_openweathermap">weatherTemp</field>
+                                    <value name="location">
+                                      <shadow type="text" id="@i3b[N[8eKp8bBw9q7Yq">
+                                        <field name="TEXT">Oldenburg</field>
+                                      </shadow>
+                                    </value>
+                                    <value name="apikey">
+                                      <shadow type="text" id="%Bv2P?XRvf6B8]Lq{koR">
+                                        <field name="TEXT">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</field>
+                                      </shadow>
+                                    </value>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="variables_set" id="+:rm,ZP`beNy_#d`y|4d">
+                                <field name="VAR">Lastcheck</field>
+                                <value name="VALUE">
+                                  <block type="time_millis" id="`C{KFgvL[0|^.-iG8bOY"></block>
+                                </value>
+                                <next>
+                                  <block type="smile_display_clear" id="+uXp1]%*DQ`a-:R6P:G("></block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+                <next>
+                  <block type="controls_if" id="Q`U*Vp-6V[}=_)V]:z}V">
+                    <mutation else="1"></mutation>
+                    <value name="IF0">
+                      <block type="logic_compare" id="nxn.Y%YpaWeyQm:CeX]d">
+                        <field name="OP">EQ</field>
+                        <value name="A">
+                          <block type="variables_get" id="7}zxr:Ht:~?URr)NNL0p">
+                            <field name="VAR">WeatherID</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="math_number" id="nEGolAf0]`ykz-E|iyzX">
+                            <field name="NUM">800</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <statement name="DO0">
+                      <block type="variables_set" id="S9+rr6W[*.mhAs~,.SFc">
+                        <field name="VAR">Wetterbeschreibung</field>
+                        <value name="VALUE">
+                          <block type="text" id="2@Yp~@RGNclK6Dm}`0e9">
+                            <field name="TEXT">Klar</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="procedures_callnoreturn" id="PBs0*zUv},oheMSnO_r~">
+                            <mutation name="Klar"></mutation>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <statement name="ELSE">
+                      <block type="switch_case" id="V[Y8dC![@{SIF1C1KWV,">
+                        <mutation case="5"></mutation>
+                        <value name="CONDITION">
+                          <block type="math_arithmetic" id="M.JfS,(4brX3[=6H%72x">
+                            <field name="OP">DIVIDE</field>
+                            <value name="A">
+                              <block type="variables_get" id="_ZPO|])JAE0Z?u~hY6c.">
+                                <field name="VAR">WeatherID</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number" id="`wLt@Za/:Wczm=V%@dgr">
+                                <field name="NUM">100</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="CASECONDITION0">
+                          <block type="math_number" id="Y4Kx%MLBNin~dmlcJ.=8">
+                            <field name="NUM">2</field>
+                          </block>
+                        </value>
+                        <statement name="CASE0">
+                          <block type="variables_set" id="-9J{rp{f;?[:4`|AY?Y@">
+                            <field name="VAR">Wetterbeschreibung</field>
+                            <value name="VALUE">
+                              <block type="text" id="wA%6{lI6_OdRW2{)bzi)">
+                                <field name="TEXT">Gewitter</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="procedures_callnoreturn" id="3y*G~|]R#5hTDW4xM(}l">
+                                <mutation name="Gewitter"></mutation>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <value name="CASECONDITION1">
+                          <block type="math_number" id="MXYeo+?OF[K*M1ft!IqU">
+                            <field name="NUM">3</field>
+                          </block>
+                        </value>
+                        <statement name="CASE1">
+                          <block type="variables_set" id="-QaFsv[h!bu6CvtC}%bU">
+                            <field name="VAR">Wetterbeschreibung</field>
+                            <value name="VALUE">
+                              <block type="text" id="Fb;(p}d`yC!5Q!v6VZbZ">
+                                <field name="TEXT">Nieselreg.</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="procedures_callnoreturn" id="cjqgv;l=mx_}[DK:dsX8">
+                                <mutation name="Nieselregen"></mutation>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <value name="CASECONDITION2">
+                          <block type="math_number" id="?zMlN?7Cw^UBf2[S-(lw">
+                            <field name="NUM">5</field>
+                          </block>
+                        </value>
+                        <statement name="CASE2">
+                          <block type="variables_set" id="(uxi^/?5u%+D2rO#h=hO">
+                            <field name="VAR">Wetterbeschreibung</field>
+                            <value name="VALUE">
+                              <block type="text" id="n7._=;:4zlnhe1pC#!SE">
+                                <field name="TEXT">Regen</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="procedures_callnoreturn" id="`obE-erlfLQBULSD52LA">
+                                <mutation name="Regen"></mutation>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <value name="CASECONDITION3">
+                          <block type="math_number" id="5RiI:TA-hAI:joGyFREs">
+                            <field name="NUM">6</field>
+                          </block>
+                        </value>
+                        <statement name="CASE3">
+                          <block type="variables_set" id="gB=zAX=3CFJIO_OJM+B*">
+                            <field name="VAR">Wetterbeschreibung</field>
+                            <value name="VALUE">
+                              <block type="text" id="a`B**p*AMzA0[^6]=o]#">
+                                <field name="TEXT">Schnee</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="procedures_callnoreturn" id="rksmkQSc*|r}W2*RX8%g">
+                                <mutation name="Schnee"></mutation>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <value name="CASECONDITION4">
+                          <block type="math_number" id="KdFN9,0p8R=NX;mTGLDl">
+                            <field name="NUM">7</field>
+                          </block>
+                        </value>
+                        <statement name="CASE4">
+                          <block type="variables_set" id="5/ghBP|!p-*z5rG.n[3p">
+                            <field name="VAR">Wetterbeschreibung</field>
+                            <value name="VALUE">
+                              <block type="text" id=":=#Z7*.uHO+[cGQqo!_a">
+                                <field name="TEXT">Nebel</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="procedures_callnoreturn" id="x-n^6N.1ajjCO132qc#.">
+                                <mutation name="Nebel"></mutation>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <value name="CASECONDITION5">
+                          <block type="math_number" id="]41ITI`O|~IzcdviNOba">
+                            <field name="NUM">8</field>
+                          </block>
+                        </value>
+                        <statement name="CASE5">
+                          <block type="variables_set" id="9dhH3py:v.tgE=;huXe2">
+                            <field name="VAR">Wetterbeschreibung</field>
+                            <value name="VALUE">
+                              <block type="text" id="i^RnOLKyfVOtfi`roX~J">
+                                <field name="TEXT">Wolken</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="procedures_callnoreturn" id=")mJ06G3l;u9@gN@[JG[X">
+                                <mutation name="Wolken"></mutation>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                      </block>
+                    </statement>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="E5^@:n=iYj%dY3Y-#b~X" x="991" y="935">
+    <field name="NAME">Gewitter</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+  </block>
+  <block type="procedures_defnoreturn" id="uiVjp~pt[}IBl?G*ebTt" x="686" y="973">
+    <field name="NAME">Klar</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+  </block>
+  <block type="procedures_defnoreturn" id="MEzBc1P!Jj!eDvvC`O!S" x="686" y="1112">
+    <field name="NAME">Nieselregen</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+  </block>
+  <block type="procedures_defnoreturn" id="49GMBt+aP_mlgh8/;T;(" x="921" y="1148">
+    <field name="NAME">Nebel</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+  </block>
+  <block type="procedures_defnoreturn" id="ZCz7,9D6WK77cn/6026Y" x="1064" y="1242">
+    <field name="NAME">Regen</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+  </block>
+  <block type="procedures_defnoreturn" id="Ofe!uF4`]`8}*:OzVC9%" x="916" y="1334">
+    <field name="NAME">Schnee</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+  </block>
+  <block type="procedures_defnoreturn" id="B^/][iS7R;!41:+:^uow" x="707" y="1387">
+    <field name="NAME">Wolken</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+  </block>
+</xml>
