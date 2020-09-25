@@ -1,14 +1,6 @@
-/* 
-               _ _      
- ___ _ __ ___ (_) | ___ 
-/ __| '_ ` _ \| | |/ _ \
-\__ \ | | | | | | |  __/
-|___/_| |_| |_|_|_|\___|
-
-Internet-Wetter-Lampe v1.0.6 - letzte Aenderung am 30. August 2019 - entwickelt an der Abteilung "Didaktik der Informatik" an der Universitaet in Oldenburg
-
+/*
+v1.0.7 - letzte Aenderung am 25. September 2020
 */
-
 
 #include "FastLED.h"                      // Bibliothek einbinden, um LED ansteuern zu koennen
 
@@ -17,15 +9,13 @@ Internet-Wetter-Lampe v1.0.6 - letzte Aenderung am 30. August 2019 - entwickelt 
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#include "RestClient.h"                   // Bibliothek einbinden, um Get-Requests senden zu koennen
 #include <ArduinoJson.h>                  // Bibliothek einbinden, um JSONs parsen zu koennen
 
 #include <math.h>                         // Bibliothek einbinden, um Temperaturen runden zu koennen
 
 #include <WiFiManager.h>                  // Bibliothek einbinden, um Uebergabe der WiFi Credentials ueber einen AP zu ermoeglichen
 WiFiManager wifiManager;
-
-RestClient client = RestClient("api.openweathermap.org");                         // RestClient der Openweathermap-API (Hinweis: Port mit Komma uebergeben)
+WiFiClient client;
 
 #define OLED_RESET 0                       // "0" fuer ESP8266
 #define SCREEN_WIDTH 128                   // OLED display width, in pixels
@@ -37,26 +27,16 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 CRGB leds[1];                              // Instanziieren der LED
 
 
-
-
 // ========================  hier deinen API-Key eintragen!!!  ============================================================================================================
-
+const String city = "Oldenburg";
 const String api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";    // dein Open-Weather-Map-API-Schluessel, kostenlos beziehbar ueber https://openweathermap.org/
-
 // ========================================================================================================================================================================
 
-
-
 int weatherID = 0;
-int weatherID_shortened = weatherID / 100;
+int weatherID_shortened = 0;
 String weatherforecast_shortened = " ";
-float temperature_Kelvin = 0.0;
-float temperature_Celsius = temperature_Kelvin - 273;      // Hinweis: Celsiuswert + 273 = Kelvinwert
-int temperature_Celsius_Int;
-unsigned long systemtime = 0;                              // Zeit, die seit dem Start des Mikrocontrollers vergangen ist
+int temperature_Celsius_Int = 0;
 unsigned long lastcheck = 0;                               // Zeitpunkt des letzten Checks
-
-
 
 void setup() {
   Serial.begin(115200);                               // fuer die Ausgabe des seriellen Monitors
@@ -66,7 +46,7 @@ void setup() {
   display.setTextColor(WHITE);                      // ... und "Verbindungsversuch" anzeigen
   display.setTextSize(1);
   display.startscrollleft(0x00, 0x0F);
-  display.setCursor(0, 16);                         // Aufgrund der kleineren Displaygröße hier ein Offset von 16Pixeln        
+  display.setCursor(0, 16);                         // Aufgrund der kleineren Displaygröße hier ein Offset von 16Pixeln
   display.println("Verbinde dich mit");
   display.setCursor(0, 28);                        // 7 Pixel Buchstabenhöhe + 5 Pixel Abstand
   display.println("deineSmarteLampe");
@@ -83,7 +63,7 @@ void setup() {
   FastLED.setBrightness(255);
   FastLED.show();
   wifiManager.autoConnect("deineSmarteLampe");      // hier kann der Name des Hotspots deiner Lampe angepasst werden
-
+  delay(2000);
   getCurrentWeatherConditions();                    // nach dem (Neu-)Start erstmalig das aktuelle Wetter laden
   updateDisplay();
 }
@@ -141,12 +121,12 @@ void updateDisplay() {                                                          
   if (weatherforecast_shortened.length() != 0) {                          // nur, wenn weatherforecast_shortened nicht leer ist (dann naemlich keine Server-Antwort)
 
     Serial.println(temperature_Celsius_Int);
-    Serial.println(String(temperature_Celsius_Int,DEC));
-    int digitsTemperature = String(temperature_Celsius_Int,DEC).length();  // wie lang (wie viele Ziffern) ist die Anzeige der Temperatur?
+    Serial.println(String(temperature_Celsius_Int, DEC));
+    int digitsTemperature = String(temperature_Celsius_Int, DEC).length(); // wie lang (wie viele Ziffern) ist die Anzeige der Temperatur?
     display.setCursor(77 - 12 * digitsTemperature, 50);                   // bei textsize(2) ist eine Ziffer 12 Pixel breit; rechtsbuendig anzeigen, deswegen wird die x-Koord. des Cursors abhaengig davon gesetzt
     display.setTextSize(2);
     display.println(temperature_Celsius_Int);
-    
+
 
     // Grad Celsius: C
     display.setCursor(86, 50);
@@ -169,34 +149,33 @@ void updateDisplay() {                                                          
   display.display();
 }
 
+void getCurrentWeatherConditions() {
+  int WeatherData;
+  Serial.print("connecting to "); Serial.println("api.openweathermap.org");
+  if (client.connect("api.openweathermap.org", 80)) {
+    client.println("GET /data/2.5/weather?q="+ city +",DE&units=metric&lang=de&APPID="+ api_key);
+    client.println("Host: api.openweathermap.org");
+    client.println("Connection: close");
+    client.println();
+  } else {
+    Serial.println("connection failed");
+    display.stopscroll();
+    display.setTextColor(WHITE);
+    display.setTextSize(1);
+    display.setCursor(32, 16);
+    display.println("keine");
+    display.setCursor(32, 28);
+    display.println("Server-");
+    display.setCursor(32, 40);
+    display.println("antwort...");
+  }
+  const size_t capacity = JSON_ARRAY_SIZE(2) + 2 * JSON_OBJECT_SIZE(1) + 2 * JSON_OBJECT_SIZE(2) + 2 * JSON_OBJECT_SIZE(4) + JSON_OBJECT_SIZE(5) + JSON_OBJECT_SIZE(6) + JSON_OBJECT_SIZE(14) + 360;
+  DynamicJsonDocument doc(capacity);
+  deserializeJson(doc, client);
+  client.stop();
 
-void getCurrentWeatherConditions() {                                                      // Funktion zum Abrufen der Wetterdaten von der Openweathermap-API
-  
-  String address = "/data/2.5/weather?q=Oldenburg,DE&APPID=" + api_key;
-  char address2[100];
-  address.toCharArray(address2, 100);
-  Serial.println(address2);
-  String response = "";
-  int statusCode = client.get(address2, &response);                                       // Wetter von heute über die openweathermap-API
-  // int statusCode = client.get("/weather?ort=Oldenburg&wann=heute", &response);         // Wetter von heute über den Server der Uni Oldenburg
-  Serial.print("Status code from server: "); Serial.println(statusCode);
-  Serial.print("Response body from server: "); Serial.println(response);
-
-  //an dieser Stelle wird die Antwort vom Server zurechtgeschnitten (geparsed); weitere Hinweise hierzu unter arduinojson.org/assistant
-  StaticJsonDocument<1000> doc;
-  char json[1000]; // Antwort in char umwandeln; Groesse ueber den arduinojson.org/assistant berechnen
-  response.toCharArray(json, 1000);
-  DeserializationError error = deserializeJson(doc, json);
-  JsonObject root = doc.as<JsonObject>();
-  JsonObject weather = root["weather"][0];
-  JsonObject weatherdaten = root["main"];
-
-  weatherID = weather["id"];
-  temperature_Kelvin = weatherdaten["temp"];
-  Serial.println(temperature_Kelvin);
-  weatherforecast_shortened = "";
-  temperature_Celsius = temperature_Kelvin - 273;                                // Hinweis: Celsiuswert + 273 = Kelvinwert
-
+  int weatherID = doc["weather"][0]["id"];
+  int temperature_Celsius = doc["main"]["temp"];
   temperature_Celsius_Int = (int)temperature_Celsius;
   
   weatherID_shortened = weatherID / 100;
@@ -216,50 +195,47 @@ void getCurrentWeatherConditions() {                                            
 // folgende Methode erleichtert das Modellieren von Farbverlaeufen von einem RGB-Wert
 
 void fade(int led_position, uint16_t duration, uint16_t delay_val, uint16_t startR, uint16_t startG, uint16_t startB, uint16_t endR, uint16_t endG, uint16_t endB) {
-    int16_t redDiff = endR - startR;
-    int16_t greenDiff = endG - startG;
-    int16_t blueDiff = endB - startB;
-    int16_t steps = duration*1000 / delay_val;
-    int16_t redValue, greenValue, blueValue;
-    for (int16_t i = 0 ; i < steps - 1 ; ++i) {
-        redValue = (int16_t)startR + (redDiff * i / steps);
-        greenValue = (int16_t)startG + (greenDiff * i / steps);
-        blueValue = (int16_t)startB + (blueDiff * i / steps);
-        leds[0]=CRGB(redValue, greenValue, blueValue);
-        FastLED.show();
-        delay(delay_val);
-    }
-    leds[led_position]=CRGB(endR, endG, endB);
- }
+  int16_t redDiff = endR - startR;
+  int16_t greenDiff = endG - startG;
+  int16_t blueDiff = endB - startB;
+  int16_t steps = duration * 1000 / delay_val;
+  int16_t redValue, greenValue, blueValue;
+  for (int16_t i = 0 ; i < steps - 1 ; ++i) {
+    redValue = (int16_t)startR + (redDiff * i / steps);
+    greenValue = (int16_t)startG + (greenDiff * i / steps);
+    blueValue = (int16_t)startB + (blueDiff * i / steps);
+    leds[0] = CRGB(redValue, greenValue, blueValue);
+    FastLED.show();
+    delay(delay_val);
+  }
+  leds[led_position] = CRGB(endR, endG, endB);
+}
 
 
 /*
-                            
-###### #    # #####  ###### 
-#      #    # #    # #      
-#####  #    # #    # #####  
-#      #    # #####  #      
-#      #    # #   #  #      
-######  ####  #    # ###### 
-                            
-#######                                          
-#       ###### ###### ###### #    # ##### ###### 
-#       #      #      #      #   #    #   #      
-#####   #####  #####  #####  ####     #   #####  
-#       #      #      #      #  #     #   #      
-#       #      #      #      #   #    #   #      
-####### #      #      ###### #    #   #   ###### 
-                                                 
-                                                          
-###### # #    # ###### #    # ######  ####  ###### #    # 
-#      # ##   # #      #    # #      #    # #      ##   # 
-#####  # # #  # #####  #    # #####  #      #####  # #  # 
-#      # #  # # #      #    # #      #  ### #      #  # # 
-#      # #   ## #      #    # #      #    # #      #   ## 
-###### # #    # #       ####  ######  ####  ###### #    # 
+
+  ###### #    # #####  ######
+  #      #    # #    # #
+  #####  #    # #    # #####
+  #      #    # #####  #
+  #      #    # #   #  #
+  ######  ####  #    # ######
+
+  #######
+  #       ###### ###### ###### #    # ##### ######
+  #       #      #      #      #   #    #   #
+  #####   #####  #####  #####  ####     #   #####
+  #       #      #      #      #  #     #   #
+  #       #      #      #      #   #    #   #
+  ####### #      #      ###### #    #   #   ######
 
 
-
+  ###### # #    # ###### #    # ######  ####  ###### #    #
+  #      # ##   # #      #    # #      #    # #      ##   #
+  #####  # # #  # #####  #    # #####  #      #####  # #  #
+  #      # #  # # #      #    # #      #  ### #      #  # #
+  #      # #   ## #      #    # #      #    # #      #   ##
+  ###### # #    # #       ####  ######  ####  ###### #    #
           ########
           ########
           ########
@@ -274,7 +250,7 @@ void fade(int led_position, uint16_t duration, uint16_t delay_val, uint16_t star
        ##############
          ##########
            ######
-             ## 
+             ##
 */
 
 void LED_effect_clearSky() { // Effekt, der angezeigt wird, wenn der Himmel klar ist
