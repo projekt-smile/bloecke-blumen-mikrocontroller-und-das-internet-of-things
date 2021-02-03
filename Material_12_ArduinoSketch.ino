@@ -1,5 +1,5 @@
 /*
-v1.0.7 - letzte Aenderung am 25. September 2020
+v1.0.8 - letzte Aenderung am 3. Februar 2021
 */
 
 #include "FastLED.h"                      // Bibliothek einbinden, um LED ansteuern zu koennen
@@ -150,7 +150,6 @@ void updateDisplay() {                                                          
 }
 
 void getCurrentWeatherConditions() {
-  int WeatherData;
   Serial.print("connecting to "); Serial.println("api.openweathermap.org");
   if (client.connect("api.openweathermap.org", 80)) {
     client.println("GET /data/2.5/weather?q="+ city +",DE&units=metric&lang=de&APPID="+ api_key);
@@ -174,7 +173,7 @@ void getCurrentWeatherConditions() {
   deserializeJson(doc, client);
   client.stop();
 
-  int weatherID = doc["weather"][0]["id"];
+  weatherID = doc["weather"][0]["id"];
   int temperature_Celsius = doc["main"]["temp"];
   temperature_Celsius_Int = (int)temperature_Celsius;
   
