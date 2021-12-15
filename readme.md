@@ -18,10 +18,13 @@ Das diesem Kursangebot zugrunde liegende Konzept wird über die Beschreibung in 
 | [Material 07](/Material_07_Arbeitsblatt2.pdf) | Arbeitsblatt 2: Einführung in die Codierung von Farben (für SchülerInnen) |
 | [Material 08](/Material_08_Beispielblume.stl) | Druckfähige Beispiel-Blume |
 | [Material 09](/Material_09_Beispielblume_BlocksCAD_Code.xml) | BlocksCAD-Code der Beispiel-Blume |
-| [Material 10](/Material_10_Box.stl) | Verwendete Box, in die der Acrylglasstab gesteckt wird. Ergänzender Hinweis: Die Tinkercad Datei ist unter https://www.tinkercad.com/things/1LRkRKgE2dE aufruf- und editierbar (bspw. für andere Durchmesser). |
-| [Material 11](/Material_11_Box_Bodenplatte.stl) |  Verwendete Bodenplatte, in die die LED gesteckt wird. Ergänzender Hinweis: Die Tinkercad Datei ist unter https://www.tinkercad.com/things/1LRkRKgE2dE aufruf- und editierbar (bspw. für andere Durchmesser). |
+| [Material 10](/Material_10_Box.stl) | Verwendete Box, in die der Acrylglasstab gesteckt wird. Ergänzender Hinweis: Die Tinkercad Datei ist unter [https://www.tinkercad.com/things/1LRkRKgE2dE](https://www.tinkercad.com/things/1LRkRKgE2dE) aufruf- und editierbar (bspw. für andere Durchmesser). |
+| [Material 11](/Material_11_Box_Bodenplatte.stl) |  Verwendete Bodenplatte, in die die LED gesteckt wird. Ergänzender Hinweis: Die Tinkercad Datei ist unter [https://www.tinkercad.com/things/1LRkRKgE2dE](https://www.tinkercad.com/things/1LRkRKgE2dE) aufruf- und editierbar (bspw. für andere Durchmesser). |
 | [Material 12](/Material_12_ArduinoSketch.ino) | Rumpf des Arduino Codes: Nur um einzelne Openweathermap-API-Keys sowie die Farbeffekte der SchülerInnen zu ergänzen. |
 | [Material 13](/Material_13_Arbeitsblatt3.pdf) | Arbeitsblatt 3: Wir bringen unsere Blume zum Leuchten (für SchülerInnen) |
 | [Material 14](/Material_14_Hilfekarten.pdf) | Hilfekarten zu Arbeitsblatt 3  (für LehrerInnen bzw. SchülerInnen) |
 | [Material 15](/Material_13_Arbeitsblatt3.pdf) | Beispielprogramierung des Mikrocontrollers in Ardublockly: Nur um einzelne Openweathermap-API-Keys sowie die Farbeffekte der SchülerInnen zu ergänzen. |
 
+Die in diesem Repository enthaltenen Workshopmaterialien werden unter [![License: CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/) zur Verfügung gestellt. Bitte verweisen Sie auf dieses Repository oder/und auf den o.a. [INFOS-Artikel](https://www.doi.org/10.18420/infos2019-c15).
+
+Wir freuen uns sehr, dass Auszüge dieses Workshopskonzepts inzwischen Einzug in weitere Projekte gefunden haben, u. a. in das Bildungsprojekt [IT2School](https://www.wissensfabrik.de/mitmachprojekte/weiterfuehrende-schule/it2school/) ("Modul B4 – 3D-Druck", Arbeitsmaterialien B4.7 und B4.8), und einzelne Ideen auch für den Einsatz in der Hochschullehre weiterentwickelt wurden und werden (bspw. im Modul [Soft Skills und Technische Kompetenz](https://uol.de/informatik/sktk) an der Universität Oldenburg).
